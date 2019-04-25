@@ -11,3 +11,9 @@ $ npm i
 ```
 $ npm run dev
 ```
+
+## run server
+
+```
+$ npm run server
+```
