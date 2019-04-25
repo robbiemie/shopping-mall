@@ -1,6 +1,11 @@
 <template>
   <div class="header">header</div>
 </template>
+<script>
+export default {
+  name: 'navheader'
+}
+</script>
 
 <style lang="scss">
 .header {
