@@ -1,7 +1,6 @@
 const http = require('http')
 const chalk = require('chalk')
 const url = require('url')
-// const util = require('util')
 const fs = require('fs')
 
 const server = http.createServer((req, res) => {
