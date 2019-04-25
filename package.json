@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config ./build/webpack.dev.conf.js",
     "server": "node ./server",
+    "client": "node ./client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
