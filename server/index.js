@@ -1,10 +1,24 @@
 const http = require('http')
 const chalk = require('chalk')
+const url = require('url')
+// const util = require('util')
+const fs = require('fs')
+
 const server = http.createServer((req, res) => {
-  // 设置响应信息
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'text/plain;charset=utf-8;')
-  res.end('Hello NodeJs!')
+  const pathname = url.parse(req.url).pathname
+  fs.readFile(`server/${pathname.substring(1)}`, (err, data) => {
+    if (err) {
+      res.writeHead(404, {
+        'Content-Type': 'text/html'
+      })
+    } else {
+      res.writeHead(200, {
+        'Content-Type': 'text/html'
+      })
+      res.write(data.toString())
+    }
+    res.end()
+  })
 })
 const options = {
   port: 3000,
