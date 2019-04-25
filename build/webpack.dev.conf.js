@@ -45,7 +45,31 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
-      }]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'vue-style-loader' },
+          { loader: 'css-loader' }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader', // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: resolve(__dirname, '../config') // 写到目录即可，文件名强制要求是postcss.config.js
+              }
+            }
+          },
+          'sass-loader' // compiles Sass to CSS, using Node Sass by default
+        ]
+      },
+    ]
   },
   devServer: {
     hot: true,
