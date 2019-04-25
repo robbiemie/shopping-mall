@@ -2,6 +2,9 @@ const webpack = require('webpack')
 const { resolve } = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const friendlyFormatter = require('eslint-formatter-friendly')
+const cwd = process.cwd()
+const rootPath = resolve(cwd, './')
 
 module.exports = {
   mode: 'development',
@@ -10,6 +13,8 @@ module.exports = {
   },
   resolve: {
     alias: {
+      '@': resolve(rootPath, './src'), // for .(js|vue)
+      '~@': resolve(rootPath, './src'), // for .css
       'vue': 'vue/dist/vue.esm.js'
     }
   },
@@ -18,16 +23,29 @@ module.exports = {
     path: resolve(__dirname, '../dist')
   },
   module: {
-    rules: [{
-      test: /\.vue$/,
-      loader: 'vue-loader'
-    }, {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader'
-      }
-    }]
+    rules: [
+
+      {
+        enforce: 'pre', // 预处理
+        test: /\.(jsx?|vue)$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'eslint-loader',
+          options: {
+            formatter: friendlyFormatter
+          }
+        }]
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }, {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }]
   },
   devServer: {
     hot: true,
